@@ -14,7 +14,7 @@ const loginSlice = createSlice({
 
 export const { setUser } = loginSlice.actions;
 
-export const initiliazeUser = () => {
+export const initUser = () => {
     return async dispatch => {
         const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser');
 

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import BlogList from './components/Blog';
+import UserList from './components/UserList';
 import LoginForm from './components/LoginForm';
 import BlogForm from './components/BlogForm';
 import Notification from './components/Notification';
@@ -7,7 +8,8 @@ import Toggle from './components/Toggle';
 import './App.css';
 import { initializeBlogs } from './reducers/blogReducer';
 import { useDispatch, useSelector } from 'react-redux';
-import { initiliazeUser, loggout } from './reducers/loginReducer';
+import { initUser, loggout } from './reducers/loginReducer';
+import { initializeUsers } from './reducers/userReducer';
 
 
 const App = () => {
@@ -15,17 +17,13 @@ const App = () => {
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    dispatch(initializeBlogs())
-  }, []);
-
-  useEffect(() => {
-    dispatch(initiliazeUser());
+    dispatch(initializeBlogs());
+    dispatch(initUser());
+    dispatch(initializeUsers());
   }, []);
 
   const handleLoggout = () => {
     dispatch(loggout());
-    /*window.localStorage.removeItem('loggedBlogappUser');
-    setUser(null);*/
   };
 
   if (user === null) {
@@ -45,6 +43,7 @@ const App = () => {
       <h1>Blogs</h1> 
       <Notification  />
       <p>{user.username} logged in <button onClick={handleLoggout}>logout</button></p>
+      <UserList />
       <BlogForm />
       <BlogList />
     </div>
