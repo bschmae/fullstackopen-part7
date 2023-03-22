@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { createBlog } from '../reducers/blogReducer';
+import { setNotification } from '../reducers/notificationReducer';
 
-const BlogForm = ({ handleBlogForm }) => {
+const BlogForm = () => {
     const [title, setTitle] = useState('');
     const [author, setAuthor] = useState('');
     const [url, setUrl] = useState('');
@@ -9,10 +11,17 @@ const BlogForm = ({ handleBlogForm }) => {
 
     const onSubmiteHandleForm = (event) => {
         event.preventDefault();
-        handleBlogForm(title, author, url);
+        const blog = {
+            title: title,
+            author: author,
+            url: url
+        };
+        
         setTitle('');
         setAuthor('');
         setUrl('');
+        dispatch(createBlog(blog));
+        dispatch(setNotification(`successfully created blog: ${blog.title}`));
     }
 
     return (
